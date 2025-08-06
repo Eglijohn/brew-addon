@@ -1,5 +1,5 @@
 # 🍺 Brew Addon
-**"A Meteor addon for the drunks."**  
+_A Meteor addon for the drunks_
 
 ## 🧪 Installation
 

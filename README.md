@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="BrewAddonLogo.png" width="64" height="64" style="image-rendering: pixelated;">
+    <img src="BrewAddonLogo.png" width="200" height="200" style="image-rendering: pixelated;">
 </p>
 
 <p align="center">

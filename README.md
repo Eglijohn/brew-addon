@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://via.placeholder.com/150" alt="Brew Addon Logo" width="150"/>
+  <img src="BrewAddonLogo.png" alt="Brew Addon Logo" width="150"/>
 </p>
 
 <p align="center">

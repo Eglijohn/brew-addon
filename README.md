@@ -1,11 +1,12 @@
 # 🍺 Brew Addon
 _A Meteor addon for the drunks_
 
-## 🧪 Installation
-
+<details>
+<summary>⬇️ Installation</summary>
+<br/>
 1. Make sure you have [Meteor Client](https://meteorclient.com) installed.
 2. Drop `brew-addon.jar` into your `.minecraft/mods` folder. 
-
+</details>
 
 ## 🍻 Contributing
 

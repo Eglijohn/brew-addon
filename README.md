@@ -15,6 +15,9 @@ _A Meteor addon for the drunks_
 1. Make sure you have [Meteor Client](https://meteorclient.com) installed.
 2. Drop `brew-addon.jar` into your `.minecraft/mods` folder. 
 
+## 🍻 Contributing
+Got a new feature? PRs are welcome!
+
 <details>
 <summary>📋 To Do</summary>
 
@@ -28,11 +31,6 @@ _A Meteor addon for the drunks_
 - [ ] Get people to actually use it  
 
 </details>
-
-
-
-🍻 Contributing
-Got a new feature? PRs are welcome!
 
 ---
 

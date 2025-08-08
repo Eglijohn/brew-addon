@@ -15,6 +15,16 @@ _A Meteor addon for the drunks_
 1. Make sure you have [Meteor Client](https://meteorclient.com) installed.
 2. Drop `brew-addon.jar` into your `.minecraft/mods` folder. 
 
+## 📋To Do
+[ ] Add addon structure
+[ ] Teleport Util
+[ ] Add modules
+    - [ ] R3akeOn3_'s Auto Sign
+    - [ ] R3akeOn3_'s Shulker Previev
+    - [ ] Eglijohn's stuff (wont write all, WIP)
+[ ] Make support for 1.21.1 - Latest
+[ ] Get people to actually use it
+
 ## 🍻 Contributing
 Got a new feature? PRs are welcome!
 

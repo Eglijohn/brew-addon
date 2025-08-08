@@ -16,7 +16,7 @@ _A Meteor addon for the drunks_
 2. Drop `brew-addon.jar` into your `.minecraft/mods` folder. 
 
 <details>
-<summary>## 📋 To Do</summary>
+<summary>📋 To Do</summary>
 
 - [ ] Add addon structure  
 - [ ] Teleport Util  
@@ -31,7 +31,7 @@ _A Meteor addon for the drunks_
 
 
 
-## 🍻 Contributing
+🍻 Contributing
 Got a new feature? PRs are welcome!
 
 ---

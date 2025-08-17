@@ -22,6 +22,11 @@ public class BrewAddon extends MeteorAddon {
 
         // Register Modules
         Modules.get().add(new InfiniteReach());
+        Modules.get().add(new AntiVoid());
+        Modules.get().add(new AntiCreeper());
+        Modules.get().add(new ChatPrefix());
+        Modules.get().add(new TridentDupe());
+        Modules.get().add(new DamageLogger());
 
         // Register Commandds
         Commands.add(new Hop());

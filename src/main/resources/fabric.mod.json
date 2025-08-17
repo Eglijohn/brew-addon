@@ -19,7 +19,7 @@
     ]
   },
   "mixins": [
-    "brewhack.mixins.json"
+    "brewaddon.mixins.json"
   ],
   "custom": {
     "meteor-client:color": "252,186,3"

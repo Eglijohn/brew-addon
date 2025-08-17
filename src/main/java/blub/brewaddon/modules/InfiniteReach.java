@@ -18,6 +18,8 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 
+import static blub.brewaddon.utils.attack.Attack.attack;
+
 public class InfiniteReach extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
@@ -61,35 +63,10 @@ public class InfiniteReach extends Module {
         if (attackKeyIsPressed && !attackKeyWasPressed) {
             HitResult hitResult = HitResults.getCrosshairTarget(mc.player, maxReach.get(), false, entity -> true);
             if (hitResult instanceof EntityHitResult entityHit) {
-                attack(entityHit.getEntity());
+                attack(entityHit.getEntity(), useMace.get(), attackHeight.get(), false);
             }
         }
 
         attackKeyWasPressed = attackKeyIsPressed;
-    }
-
-    private boolean isHoldingMace() {
-        ItemStack mainHand = mc.player.getMainHandStack();
-        ItemStack offHand = mc.player.getOffHandStack();
-        return mainHand.getItem() == Items.MACE || offHand.getItem() == Items.MACE;
-    }
-
-    private void attack(Entity target) {
-        if (target == null || !target.isAlive()) return;
-
-        Vec3d originalPos = mc.player.getPos();
-        Vec3d targetPos = target.getPos().add(0, 0.2, 0);
-
-        if (useMace.get() && isHoldingMace()) {
-            Movement.teleport(targetPos, false, false);
-            Movement.teleport(originalPos.add(0, attackHeight.get(), 0), false, false);
-            Movement.teleport(targetPos, false, false);
-            mc.player.networkHandler.sendPacket(PlayerInteractEntityC2SPacket.attack(target, mc.player.isSneaking()));
-            Movement.teleport(originalPos, false, false);
-        } else {
-            Movement.teleport(targetPos, false, false);
-            mc.player.networkHandler.sendPacket(PlayerInteractEntityC2SPacket.attack(target, mc.player.isSneaking()));
-            Movement.teleport(originalPos, false, false);
-        }
     }
 }

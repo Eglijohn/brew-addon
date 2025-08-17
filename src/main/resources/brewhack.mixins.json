@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "blub.brewaddon.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "PlayerInteractEntityC2SPacketAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

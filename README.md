@@ -21,13 +21,13 @@ Got a new feature? PRs are welcome!
 <details>
 <summary>📋 To Do</summary>
 
-- [ ] Add addon structure
-- [ ] Teleport Util
+- [x] Add addon structure
+- [x] Teleport Util
 - [ ] Add modules
     - [ ] R3akeOn3_'s Auto Sign
     - [ ] R3akeOn3_'s Shulker Preview
     - [ ] Eglijohn's stuff (WIP)
-- [ ] Make support for 1.21.1 - Latest
+- [ ] Make support for mc 1.21.1 - Latest
 - [ ] Get people to actually use it
 
 </details>

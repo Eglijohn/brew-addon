@@ -30,7 +30,7 @@ public class Hop extends Command {
                         double z = DoubleArgumentType.getDouble(context, "z");
 
                         Vec3d pos = new Vec3d(x, y, z);
-                        Movement.teleport((List<Vec3d>) pos, false, false);
+                        Movement.teleport(pos, false, false);
                         return SINGLE_SUCCESS;
                     })
                     .then(argument("clientSided", BoolArgumentType.bool())
@@ -41,7 +41,7 @@ public class Hop extends Command {
                             boolean clientSided = BoolArgumentType.getBool(context, "clientSided");
 
                             Vec3d pos = new Vec3d(x, y, z);
-                            Movement.teleport((List<Vec3d>) pos, clientSided, false);
+                            Movement.teleport(pos, clientSided, false);
                             return SINGLE_SUCCESS;
                         })
                         // .hop x y z clientSided onGround
@@ -54,7 +54,7 @@ public class Hop extends Command {
                                 boolean onGround = BoolArgumentType.getBool(context, "onGround");
 
                                 Vec3d pos = new Vec3d(x, y, z);
-                                Movement.teleport((List<Vec3d>) pos, clientSided, onGround);
+                                Movement.teleport(pos, clientSided, onGround);
                                 return SINGLE_SUCCESS;
                             })
                         )

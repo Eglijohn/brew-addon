@@ -11,7 +11,7 @@ import meteordevelopment.meteorclient.utils.render.color.SettingColor;
 
 public class ChatPrefix extends Module {
     public ChatPrefix() {
-        super(BrewAddon.CATEGORY, "chat-prefix", "Customize the [Meteor] chat prefix and module colors.");
+        super(BrewAddon.CATEGORY, "b-chat-prefix", "Customize the [Meteor] chat prefix and module colors.");
     }
 
     private final SettingGroup sgMain = settings.createGroup("Main Prefix");

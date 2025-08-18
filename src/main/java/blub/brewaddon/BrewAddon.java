@@ -1,10 +1,12 @@
 package blub.brewaddon;
 
+import blub.brewaddon.gui.ScaryPlayersTab;
 import com.mojang.logging.LogUtils;
 
 import meteordevelopment.meteorclient.addons.GithubRepo;
 import meteordevelopment.meteorclient.addons.MeteorAddon;
 import meteordevelopment.meteorclient.commands.Commands;
+import meteordevelopment.meteorclient.gui.tabs.Tabs;
 import meteordevelopment.meteorclient.systems.modules.Category;
 import meteordevelopment.meteorclient.systems.modules.Modules;
 
@@ -19,7 +21,8 @@ public class BrewAddon extends MeteorAddon {
 
     @Override
     public void onInitialize() {
-        LOG.info("[BrewAddon] initializing...");
+        LOG.info("Brew Addon Initializing...");
+        LOG.info("Thank you for choosing Brew Addon by The Blub Software!");
 
 
         // Register Modules
@@ -30,10 +33,16 @@ public class BrewAddon extends MeteorAddon {
         Modules.get().add(new TridentDupe());
         Modules.get().add(new DamageLogger());
         Modules.get().add(new ClickTp());
+        Modules.get().add(new RenderNotify());
 
-        // Register Commandds
+        // Register Commands
         Commands.add(new Hop());
         // Commands.add(new TpTest());
+
+        // Register Tabs
+        Tabs.add(new ScaryPlayersTab());
+
+        LOG.info("Brew Addon initialized");
     }
 
     @Override

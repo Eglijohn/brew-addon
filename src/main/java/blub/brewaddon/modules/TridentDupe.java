@@ -22,7 +22,7 @@ public class TridentDupe extends Module {
     private static boolean repeat = false;
 
     public TridentDupe() {
-        super(BrewAddon.CATEGORY, "trident-dupe", "Trident Dupe by Superheld2006");
+        super(BrewAddon.CATEGORY, "b-trident-dupe", "Trident Dupe by Superheld2006");
     }
 
     @Override

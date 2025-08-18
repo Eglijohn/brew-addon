@@ -20,17 +20,29 @@ public class Movement {
     public static void teleport(List<Vec3d> positions, boolean setClientSided, Boolean onGround) {
         if (mc.player != null) {
             for (Vec3d pos : positions) {
-                Double distance = mc.player.getPos().distanceTo(pos);
-                Integer packetsRequired = (int) Math.ceil(distance / 10.0) - 1;
+                Integer packetsRequired = calculatePackets(pos);
 
                 sendPackets(onGround, packetsRequired); // Spam packets
-                info("Spamming " + packetsRequired + " packets to " + pos);
                 mc.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(pos.x, pos.y, pos.z, onGround)); // Send final packet
-                info("Sending final packet to " + pos);
 
                 if (setClientSided) mc.player.setPosition(pos); // Set client-sided position
             }
         }
+    }
+
+
+    /**
+     * Calculate the number of packets required to teleport to a position.
+     * @param position The position to teleport to.
+     * @return The number of packets required.
+     */
+    public static Integer calculatePackets(Vec3d position) {
+        if (mc.player == null) return 0;
+
+        Double distance = mc.player.getPos().distanceTo(position);
+        Integer packetsRequired = (int) Math.ceil(distance / 10.0) - 1; // 10 blocks per packet
+
+        return packetsRequired;
     }
 
 

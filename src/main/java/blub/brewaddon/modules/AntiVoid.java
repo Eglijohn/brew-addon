@@ -17,7 +17,7 @@ import java.util.List;
 
 public class AntiVoid extends Module {
     public AntiVoid() {
-        super(BrewAddon.CATEGORY, "anti-void", "Prevents you from falling into the void by teleporting you back.");
+        super(BrewAddon.CATEGORY, "b-anti-void", "Prevents you from falling into the void by teleporting you back.");
     }
 
     private final SettingGroup sgOverworld = settings.createGroup("Overworld");

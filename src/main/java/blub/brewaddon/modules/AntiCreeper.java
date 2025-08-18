@@ -39,7 +39,7 @@ public class AntiCreeper extends Module {
     );
 
     public AntiCreeper() {
-        super(BrewAddon.CATEGORY, "anti-creeper", "Automatically kills creepers.");
+        super(BrewAddon.CATEGORY, "b-anti-creeper", "Automatically kills creepers.");
     }
 
     @EventHandler

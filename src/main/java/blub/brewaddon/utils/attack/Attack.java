@@ -1,5 +1,6 @@
 package blub.brewaddon.utils.attack;
 
+import blub.brewaddon.utils.misc.AsyncTaskQueue;
 import blub.brewaddon.utils.movement.Movement;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -8,7 +9,9 @@ import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import static meteordevelopment.meteorclient.MeteorClient.mc;
 import static meteordevelopment.meteorclient.utils.player.ChatUtils.info;
@@ -33,16 +36,19 @@ public class Attack {
             originalPos
         );
 
+        List<Runnable> tasks = new ArrayList<>();
+
         if (useMace && isHoldingMace()) {
-            info("Using mace to attack " + target.getName().getString());
-            Movement.execute(positions, 0, 2, false, false);
-            mc.player.networkHandler.sendPacket(PlayerInteractEntityC2SPacket.attack(target, mc.player.isSneaking()));
-            Movement.execute(positions, 3, false, false);
+            tasks.add(() -> Movement.execute(positions, 0, 2, true, false));
+            tasks.add(() -> mc.player.networkHandler.sendPacket(PlayerInteractEntityC2SPacket.attack(target, mc.player.isSneaking())));
+            tasks.add(() -> Movement.execute(positions, 3, true, false));
         } else {
-            Movement.execute(positions, 0, false, false);
-            mc.player.networkHandler.sendPacket(PlayerInteractEntityC2SPacket.attack(target, mc.player.isSneaking()));
-            Movement.execute(positions, 3, false, false);
+            tasks.add(() -> Movement.execute(positions, 0, false, false));
+            tasks.add(() -> mc.player.networkHandler.sendPacket(PlayerInteractEntityC2SPacket.attack(target, mc.player.isSneaking())));
+            tasks.add(() -> Movement.execute(positions, 3, false, false));
         }
+
+        AsyncTaskQueue.execute(tasks);
 
         if (autoEquipMace) {
             //mc.player.getInventory().selectedSlot = originalSlot;

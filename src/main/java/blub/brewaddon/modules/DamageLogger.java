@@ -80,7 +80,7 @@ public class DamageLogger extends Module {
     );
 
     public DamageLogger() {
-        super(BrewAddon.CATEGORY, "damage-logger", "Logs damage events");
+        super(BrewAddon.CATEGORY, "b-damage-logger", "Logs damage events");
     }
 
     @EventHandler

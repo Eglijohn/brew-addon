@@ -51,7 +51,7 @@ public class InfiniteReach extends Module {
     private boolean attackKeyWasPressed = false;
 
     public InfiniteReach() {
-        super(BrewAddon.CATEGORY, "infinite-reach", "Looong arm");
+        super(BrewAddon.CATEGORY, "b-infinite-reach", "Looong arm");
     }
 
     @EventHandler

@@ -6,6 +6,7 @@ import net.minecraft.client.render.Camera;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.entity.projectile.ProjectileUtil;
@@ -48,5 +49,28 @@ public class HitResults {
         }
 
         return null;
+    }
+
+    public static BlockPos getStaredBlock(double range) {
+        Camera camera = MeteorClient.mc.gameRenderer.getCamera();
+        Vec3d cameraPos = camera.getPos();
+        BlockPos pos = MeteorClient.mc.world.raycast(new RaycastContext(cameraPos, cameraPos.add(Vec3d.fromPolar(camera.getPitch(), camera.getYaw()).multiply(range)), RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, MeteorClient.mc.player)).getBlockPos();
+        int maxSearchHeight = 256;
+        if (!MeteorClient.mc.world.isChunkLoaded(pos.getX() >> 4, pos.getZ() >> 4)) {
+            return null;
+        } else {
+            for(int y = pos.getY(); y < pos.getY() + maxSearchHeight; ++y) {
+                BlockPos temppos = new BlockPos(pos.getX(), y, pos.getZ());
+                if ((double)MeteorClient.mc.player.getHeight() < 0.9) {
+                    return temppos.up();
+                }
+
+                if (!MeteorClient.mc.world.getBlockState(temppos).isSolid() && !MeteorClient.mc.world.getBlockState(temppos.up()).isSolid()) {
+                    return temppos;
+                }
+            }
+
+            return null;
+        }
     }
 }

@@ -8,7 +8,10 @@ import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.List;
+
 import static meteordevelopment.meteorclient.MeteorClient.mc;
+import static meteordevelopment.meteorclient.utils.player.ChatUtils.info;
 
 public class Attack {
     public static void attack(Entity target, Boolean useMace, Integer attackHeight, Boolean autoEquipMace) {
@@ -23,16 +26,22 @@ public class Attack {
             equipMace();
         }
 
+        List<Vec3d> positions = List.of(
+            targetPos,
+            targetPos.add(0, attackHeight, 0),
+            targetPos,
+            originalPos
+        );
+
         if (useMace && isHoldingMace()) {
-            Movement.teleport(targetPos, false, false);
-            Movement.teleport(originalPos.add(0, attackHeight, 0), false, false);
-            Movement.teleport(targetPos, false, false);
+            info("Using mace to attack " + target.getName().getString());
+            Movement.execute(positions, 0, 2, false, false);
             mc.player.networkHandler.sendPacket(PlayerInteractEntityC2SPacket.attack(target, mc.player.isSneaking()));
-            Movement.teleport(originalPos, false, false);
+            Movement.execute(positions, 3, false, false);
         } else {
-            Movement.teleport(targetPos, false, false);
+            Movement.execute(positions, 0, false, false);
             mc.player.networkHandler.sendPacket(PlayerInteractEntityC2SPacket.attack(target, mc.player.isSneaking()));
-            Movement.teleport(originalPos, false, false);
+            Movement.execute(positions, 3, false, false);
         }
 
         if (autoEquipMace) {

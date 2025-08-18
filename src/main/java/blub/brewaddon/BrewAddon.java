@@ -1,11 +1,13 @@
 package blub.brewaddon;
 
 import com.mojang.logging.LogUtils;
+
 import meteordevelopment.meteorclient.addons.GithubRepo;
 import meteordevelopment.meteorclient.addons.MeteorAddon;
 import meteordevelopment.meteorclient.commands.Commands;
 import meteordevelopment.meteorclient.systems.modules.Category;
 import meteordevelopment.meteorclient.systems.modules.Modules;
+
 import org.slf4j.Logger;
 
 import blub.brewaddon.commands.*;
@@ -27,9 +29,11 @@ public class BrewAddon extends MeteorAddon {
         Modules.get().add(new ChatPrefix());
         Modules.get().add(new TridentDupe());
         Modules.get().add(new DamageLogger());
+        Modules.get().add(new ClickTp());
 
         // Register Commandds
         Commands.add(new Hop());
+        // Commands.add(new TpTest());
     }
 
     @Override

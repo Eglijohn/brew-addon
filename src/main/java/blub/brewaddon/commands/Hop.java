@@ -9,6 +9,8 @@ import net.fabricmc.loader.impl.lib.sat4j.core.Vec;
 import net.minecraft.command.CommandSource;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.List;
+
 public class Hop extends Command {
 
     public Hop() {
@@ -28,7 +30,7 @@ public class Hop extends Command {
                         double z = DoubleArgumentType.getDouble(context, "z");
 
                         Vec3d pos = new Vec3d(x, y, z);
-                        Movement.teleport(pos, false, false);
+                        Movement.teleport((List<Vec3d>) pos, false, false);
                         return SINGLE_SUCCESS;
                     })
                     .then(argument("clientSided", BoolArgumentType.bool())
@@ -39,7 +41,7 @@ public class Hop extends Command {
                             boolean clientSided = BoolArgumentType.getBool(context, "clientSided");
 
                             Vec3d pos = new Vec3d(x, y, z);
-                            Movement.teleport(pos, clientSided, false);
+                            Movement.teleport((List<Vec3d>) pos, clientSided, false);
                             return SINGLE_SUCCESS;
                         })
                         // .hop x y z clientSided onGround
@@ -52,7 +54,7 @@ public class Hop extends Command {
                                 boolean onGround = BoolArgumentType.getBool(context, "onGround");
 
                                 Vec3d pos = new Vec3d(x, y, z);
-                                Movement.teleport(pos, clientSided, onGround);
+                                Movement.teleport((List<Vec3d>) pos, clientSided, onGround);
                                 return SINGLE_SUCCESS;
                             })
                         )

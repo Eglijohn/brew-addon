@@ -34,7 +34,7 @@ public class ClickTp extends Module {
     private final Setting<Keybind> clickTP;
 
     public ClickTp() {
-        super(BrewAddon.CATEGORY, "better-click-tp", "Uses the Liveoverflow exploit to teleport to the block you are looking at.");
+        super(BrewAddon.CATEGORY, "click-tp", "teleport to the block you are looking at.");
 
         this.sgGeneral = this.settings.getDefaultGroup();
         this.sgRender = this.settings.createGroup("Render");

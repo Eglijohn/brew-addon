@@ -21,12 +21,12 @@ _A Meteor addon for the drunks_
 ### Manual
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Eglijohn/eglis-autoplayaddon-addon.git
+   git clone https://github.com/Eglijohn/brew-addon.git
    ```
 
 2. Navigate to the cloned directory:
    ```bash
-   cd eglis-autoplayaddon-addon
+   cd brew-addon
    ```
 
 3. Build the jar file:

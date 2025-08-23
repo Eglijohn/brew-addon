@@ -24,7 +24,6 @@ public class Movement {
 
                 sendPackets(onGround, packetsRequired); // Spam packets
                 mc.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(pos.x, pos.y, pos.z, onGround)); // Send final packet
-
                 if (setClientSided) mc.player.setPosition(pos); // Set client-sided position
             }
         }

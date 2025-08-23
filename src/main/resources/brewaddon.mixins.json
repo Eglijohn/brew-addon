@@ -3,7 +3,8 @@
   "package": "blub.brewaddon.mixins",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "PlayerInteractEntityC2SPacketAccessor"
+    "PlayerInteractEntityC2SPacketAccessor",
+    "SplashTextMixin"
   ],
   "injectors": {
     "defaultRequire": 1

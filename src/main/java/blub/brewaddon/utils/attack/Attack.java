@@ -11,23 +11,17 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 import static meteordevelopment.meteorclient.MeteorClient.mc;
-import static meteordevelopment.meteorclient.utils.player.ChatUtils.info;
 
 public class Attack {
     public static void attack(Entity target, Boolean useMace, Integer attackHeight, Boolean autoEquipMace) {
-        if (target == null || !target.isAlive()) return;
+        if (target == null || !target.isAlive() || mc.player == null) return;
 
         Vec3d originalPos = mc.player.getPos();
         Vec3d targetPos = target.getPos().add(0, 0.2, 0);
 
-        Integer originalSlot = mc.player.getInventory().selectedSlot;
-
-        if (autoEquipMace) {
-            equipMace();
-        }
+        // Integer originalSlot = mc.player.getInventory().selectedSlot;
 
         List<Vec3d> positions = List.of(
             targetPos,
@@ -38,25 +32,25 @@ public class Attack {
 
         List<Runnable> tasks = new ArrayList<>();
 
+        if (autoEquipMace) {
+            equipMace();
+        }
+
         if (useMace && isHoldingMace()) {
             tasks.add(() -> Movement.execute(positions, 0, 2, true, false));
             tasks.add(() -> mc.player.networkHandler.sendPacket(PlayerInteractEntityC2SPacket.attack(target, mc.player.isSneaking())));
             tasks.add(() -> Movement.execute(positions, 3, true, false));
         } else {
-            tasks.add(() -> Movement.execute(positions, 0, false, false));
+            tasks.add(() -> Movement.execute(positions, 0, true, false));
             tasks.add(() -> mc.player.networkHandler.sendPacket(PlayerInteractEntityC2SPacket.attack(target, mc.player.isSneaking())));
-            tasks.add(() -> Movement.execute(positions, 3, false, false));
+            tasks.add(() -> Movement.execute(positions, 3, true, false));
         }
-
         AsyncTaskQueue.execute(tasks);
-
-        if (autoEquipMace) {
-            //mc.player.getInventory().selectedSlot = originalSlot;
-        }
     }
 
     private static void equipMace() {
         if (!isHoldingMace()) {
+            assert mc.player != null;
             PlayerInventory inventory = mc.player.getInventory();
 
             for (int i = 0; i < 9; i++) {
@@ -70,6 +64,7 @@ public class Attack {
     }
 
     private static boolean isHoldingMace() {
+        if (mc.player == null) return false;
         ItemStack mainHand = mc.player.getMainHandStack();
         ItemStack offHand = mc.player.getOffHandStack();
         return mainHand.getItem() == Items.MACE || offHand.getItem() == Items.MACE;

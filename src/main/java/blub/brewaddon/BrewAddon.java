@@ -37,7 +37,7 @@ public class BrewAddon extends MeteorAddon {
 
         // Register Commands
         Commands.add(new Hop());
-        // Commands.add(new TpTest());
+        Commands.add(new TpTest());
 
         // Register Tabs
         Tabs.add(new ScaryPlayersTab());

@@ -5,11 +5,9 @@ import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import meteordevelopment.meteorclient.commands.Command;
-import net.fabricmc.loader.impl.lib.sat4j.core.Vec;
 import net.minecraft.command.CommandSource;
 import net.minecraft.util.math.Vec3d;
 
-import java.util.List;
 
 public class Hop extends Command {
 

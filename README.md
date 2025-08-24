@@ -50,7 +50,7 @@ Got a new feature? PRs are welcome!
     - [ ] R3akeOn3_'s Auto Sign
     - [ ] R3akeOn3_'s Shulker Preview
     - [x] Eglijohn's stuff 
-- [ ] Make support for mc 1.21.1 - Latest
+- [x] Make support for mc 1.21.1 - Latest
 - [ ] Get people to actually use it
 
 </details>

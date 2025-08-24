@@ -2,9 +2,9 @@ name: Build JAR
 
 on:
     push:
-        branches: [ "1.21.4" ]
+        branches: [ "1.21.8" ]
     pull_request:
-        branches: [ "1.21.4" ]
+        branches: [ "1.21.8" ]
     workflow_dispatch:
 
 jobs:

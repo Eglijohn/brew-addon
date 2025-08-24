@@ -56,7 +56,7 @@ public class Attack {
             for (int i = 0; i < 9; i++) {
                 ItemStack stack = inventory.getStack(i);
                 if (stack.getItem() == Items.MACE) {
-                    inventory.selectedSlot = i;
+                    inventory.setSelectedSlot(i);
                     return;
                 }
             }

@@ -165,7 +165,7 @@ public class InfiniteReach extends Module {
             }
         }
 
-        int slot = bestSlot != -1 ? bestSlot : mc.player.getInventory().selectedSlot;
+        int slot = bestSlot != -1 ? bestSlot : mc.player.getInventory().getSelectedSlot();
         double breakDelta = BlockUtils.getBreakDelta(slot, currentBlockState);
         breakProgress += breakDelta;
 

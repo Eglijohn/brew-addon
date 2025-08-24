@@ -57,7 +57,7 @@ public class TridentDupe extends Module {
         if (!(mc.currentScreen instanceof DeathScreen) && mc.world != null) {
             switch (state) {
                 case 0:
-                    if (!mc.player.getInventory().getMainHandStack().isOf(Items.TRIDENT)) {
+                    if (!mc.player.getInventory().getMainStacks().equals(Items.TRIDENT)) {
                         return;
                     }
 
@@ -73,7 +73,7 @@ public class TridentDupe extends Module {
                     }
                     break;
                 case 2:
-                    int slot = mc.player.getInventory().selectedSlot;
+                    int slot = mc.player.getInventory().getSelectedSlot();
                     mc.interactionManager.clickSlot(mc.player.currentScreenHandler.syncId, 3, slot, SlotActionType.SWAP, mc.player);
                     allowActions = true;
                     PlayerActionC2SPacket packet2 = new PlayerActionC2SPacket(PlayerActionC2SPacket.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, Direction.DOWN, 0);

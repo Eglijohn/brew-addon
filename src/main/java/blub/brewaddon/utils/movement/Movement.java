@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static meteordevelopment.meteorclient.MeteorClient.mc;
-import static meteordevelopment.meteorclient.utils.player.ChatUtils.info;
 
 public class Movement {
     /**
@@ -17,13 +16,13 @@ public class Movement {
      * @param setClientSided Whether to set the client-sided position.
      * @param onGround Whether the player is on the ground.
      */
-    public static void teleport(List<Vec3d> positions, boolean setClientSided, Boolean onGround) {
+    public static void teleport(List<Vec3d> positions, boolean setClientSided, boolean onGround) {
         if (mc.player != null) {
             for (Vec3d pos : positions) {
                 Integer packetsRequired = calculatePackets(pos);
 
                 sendPackets(onGround, packetsRequired); // Spam packets
-                mc.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(pos.x, pos.y, pos.z, onGround)); // Send final packet
+                mc.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(pos.x, pos.y, pos.z, onGround, mc.player.horizontalCollision)); // Send final packet
                 if (setClientSided) mc.player.setPosition(pos); // Set client-sided position
             }
         }
@@ -98,7 +97,7 @@ public class Movement {
         if (mc.player != null) {
             if (packetsRequired >= 20) return;
             for (int i = 0; i < packetsRequired; i++) {
-                mc.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY(), mc.player.getZ(), onGround));
+                mc.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY(), mc.player.getZ(), onGround, mc.player.horizontalCollision));
             }
         }
     }

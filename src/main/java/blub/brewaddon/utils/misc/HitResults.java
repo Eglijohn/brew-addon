@@ -24,7 +24,7 @@ public class HitResults {
         Camera camera = mc.gameRenderer.getCamera();
         Vec3d cameraPos = camera.getPos();
 
-        Vec3d direction = Vec3d.fromPolar(camera.getPitch(), camera.getYaw()).multiply(210);
+        Vec3d direction = Vec3d.fromPolar(camera.getPitch(), camera.getYaw()).multiply(range);
         Vec3d targetPos = cameraPos.add(direction);
 
         EntityHitResult entityHitResult = ProjectileUtil.raycast(entity, cameraPos, targetPos, entity.getBoundingBox().stretch(direction).expand(1), filter.and(targetEntity -> !targetEntity.isSpectator()), range * range);

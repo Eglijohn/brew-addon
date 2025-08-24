@@ -4,7 +4,7 @@ plugins {
 
 base {
     archivesName = properties["archives_base_name"] as String
-    version = properties["mod_version"] as String
+    version = "${properties["mod_version"]}+mc${properties["minecraft_version"]}"
     group = properties["maven_group"] as String
 }
 

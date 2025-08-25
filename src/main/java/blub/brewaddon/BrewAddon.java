@@ -1,12 +1,15 @@
 package blub.brewaddon;
 
 import blub.brewaddon.gui.ScaryPlayersTab;
+import blub.brewaddon.hud.StatisticsHud;
 import com.mojang.logging.LogUtils;
 
 import meteordevelopment.meteorclient.addons.GithubRepo;
 import meteordevelopment.meteorclient.addons.MeteorAddon;
 import meteordevelopment.meteorclient.commands.Commands;
 import meteordevelopment.meteorclient.gui.tabs.Tabs;
+import meteordevelopment.meteorclient.systems.hud.Hud;
+import meteordevelopment.meteorclient.systems.hud.HudGroup;
 import meteordevelopment.meteorclient.systems.modules.Category;
 import meteordevelopment.meteorclient.systems.modules.Modules;
 
@@ -18,6 +21,7 @@ import blub.brewaddon.modules.*;
 public class BrewAddon extends MeteorAddon {
     public static final Logger LOG = LogUtils.getLogger();
     public static final Category CATEGORY = new Category("Brew Addon");
+    public static final HudGroup HUD_GROUP = new HudGroup("Brew Addon HUD");
 
     @Override
     public void onInitialize() {
@@ -41,6 +45,9 @@ public class BrewAddon extends MeteorAddon {
 
         // Register Tabs
         Tabs.add(new ScaryPlayersTab());
+
+        // Register HUD
+        Hud.get().register(StatisticsHud.INFO);
 
         LOG.info("Brew Addon initialized");
     }

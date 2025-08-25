@@ -13,6 +13,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
@@ -84,7 +85,7 @@ public class InfiniteReach extends Module {
         HitResult hitResult = HitResults.getCrosshairTarget(mc.player, maxReach.get(), true, entity -> true);
         if (hitResult instanceof EntityHitResult entityHit) {
             Entity target = entityHit.getEntity();
-            if (target != null && getTargetDistance(target.getPos()) > VANILLA_REACH) {
+            if (target != null && getTargetDistance(target.getPos()) > VANILLA_REACH && !(target instanceof ItemEntity)) {
                 if (debug.get()) { info("Attacking " + target.getName().getString() + " at distance " + getTargetDistance(target.getPos())); }
                 Attack.attack(target, maceAttack.get(), attackHeight.get(), false);
             }

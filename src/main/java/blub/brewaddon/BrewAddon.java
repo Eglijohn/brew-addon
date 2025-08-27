@@ -26,8 +26,6 @@ public class BrewAddon extends MeteorAddon {
     @Override
     public void onInitialize() {
         LOG.info("Brew Addon Initializing...");
-        LOG.info("Thank you for choosing Brew Addon by The Blub Software!");
-
 
         // Register Modules
         Modules.get().add(new InfiniteReach());
@@ -38,10 +36,12 @@ public class BrewAddon extends MeteorAddon {
         Modules.get().add(new DamageLogger());
         Modules.get().add(new ClickTp());
         Modules.get().add(new RenderNotify());
+        Modules.get().add(new TeleportWaypoints());
 
         // Register Commands
         Commands.add(new Hop());
         Commands.add(new TpTest());
+        ;
 
         // Register Tabs
         Tabs.add(new ScaryPlayersTab());

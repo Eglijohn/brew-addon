@@ -5,11 +5,14 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 import static meteordevelopment.meteorclient.MeteorClient.mc;
-import static meteordevelopment.meteorclient.utils.player.ChatUtils.info;
 
 public class Movement {
+    private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+
     /**
      * Teleport to multiple positions
      *
@@ -17,7 +20,7 @@ public class Movement {
      * @param setClientSided Whether to set the client-sided position.
      * @param onGround Whether the player is on the ground.
      */
-    public static void teleport(List<Vec3d> positions, boolean setClientSided, Boolean onGround) {
+    public static void teleport(List<Vec3d> positions, boolean setClientSided, boolean onGround) {
         if (mc.player != null) {
             for (Vec3d pos : positions) {
                 Integer packetsRequired = calculatePackets(pos);
@@ -51,10 +54,35 @@ public class Movement {
      * @param setClientSided Whether to set the client-sided position.
      * @param onGround ongRound value.
      */
-    public static void teleport(Vec3d position, boolean setClientSided, Boolean onGround) {
+    public static void teleport(Vec3d position, boolean setClientSided, boolean onGround) {
         List<Vec3d> positions = new ArrayList<>();
         positions.add(position);
         teleport(positions, setClientSided, onGround);
+    }
+
+
+    /**
+     * Teleport to multiple positions with a delay between each teleport.
+     *
+     * @param positions The list of positions to teleport to.
+     * @param setClientSided Whether to set the client-sided position.
+     * @param onGround Whether the player is on the ground.
+     * @param delay The delay between each teleport in milliseconds.
+     */
+    public static void teleport(List<Vec3d> positions, boolean setClientSided, boolean onGround, long delay) {
+        if (mc.player == null) return;
+
+        scheduler.execute(() -> {
+            for (Vec3d pos : positions) {
+                teleport(pos, setClientSided, onGround);
+
+                try {
+                    Thread.sleep(delay);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        });
     }
 
 
@@ -65,7 +93,7 @@ public class Movement {
      * @param setClientSided Whether to set the client-sided position.
      * @param onGround Whether the player is on the ground.
      */
-    public static void execute(List<Vec3d> positions, int stage, boolean setClientSided, Boolean onGround) {
+    public static void execute(List<Vec3d> positions, int stage, boolean setClientSided, boolean onGround) {
         execute(positions, stage, stage, setClientSided, onGround);
     }
 
@@ -77,7 +105,7 @@ public class Movement {
      * @param setClientSided Whether to set the client-sided position.
      * @param onGround Whether the player is on the ground.
      */
-    public static void execute(List<Vec3d> positions, int startStage, int endStage, boolean setClientSided, Boolean onGround) {
+    public static void execute(List<Vec3d> positions, int startStage, int endStage, boolean setClientSided, boolean onGround) {
         List<Vec3d> p = new ArrayList<>();
 
         for (int i = startStage; i <= endStage && i < positions.size(); i++) {
@@ -94,7 +122,7 @@ public class Movement {
      * @param onGround Whether the player is on the ground.
      * @param packetsRequired The number of packets to send.
      */
-    public static void sendPackets(boolean onGround, Integer packetsRequired) {
+    public static void sendPackets(boolean onGround, int packetsRequired) {
         if (mc.player != null) {
             if (packetsRequired >= 20) return;
             for (int i = 0; i < packetsRequired; i++) {

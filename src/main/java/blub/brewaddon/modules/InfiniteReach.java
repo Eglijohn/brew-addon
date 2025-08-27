@@ -111,10 +111,6 @@ public class InfiniteReach extends Module {
             }
             Movement.teleport(target.toCenterPos().add(0, 2, 0), false, false);
             mc.getNetworkHandler().sendPacket(new PlayerInteractBlockC2SPacket(Hand.MAIN_HAND, blockHitResult, 0));
-            if (isContainerBlock(block)) {
-                mc.getNetworkHandler().sendPacket(new PlayerInteractBlockC2SPacket(Hand.MAIN_HAND, blockHitResult, 0));
-                mc.getNetworkHandler().sendPacket(new PlayerInteractBlockC2SPacket(Hand.MAIN_HAND, blockHitResult, 0));
-            }
             Movement.teleport(originalPos, true, false);
         }
     }
@@ -231,12 +227,6 @@ public class InfiniteReach extends Module {
 
         attackKeyWasPressed = attackKeyIsPressed;
         interactKeyWasPressed = interactKeyIsPressed;
-    }
-
-    private boolean isContainerBlock(Block block) {
-        return block == Blocks.CHEST ||
-            block == Blocks.ENDER_CHEST ||
-            block == Blocks.BARREL;
     }
 
     @Override

@@ -8,7 +8,7 @@
   <img src="https://img.shields.io/badge/made%20with-%F0%9F%8D%BA-ffe200" />
 </p>
 
-# 🍺 Brew Addon (WIP)
+# 🍺 Brew Addon 
 _A Meteor addon for the drunks_
 
 ## Installation

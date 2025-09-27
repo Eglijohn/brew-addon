@@ -20,13 +20,6 @@ import static blub.brewaddon.utils.misc.TextUtils.formatMinecraftString;
 public class DamageLogger extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
-    private final Setting<Boolean> enableGlobalMode = sgGeneral.add(new BoolSetting.Builder()
-        .name("enable-global-mode")
-        .description("Enable global health logging (for simpcraft.com)")
-        .defaultValue(false)
-        .build()
-    );
-
     private final Setting<logMode> logModeSetting = sgGeneral.add(new EnumSetting.Builder<logMode>()
         .name("log-mode")
         .description("How to log the damage events")

@@ -5,6 +5,7 @@ import blub.brewaddon.utils.attack.Attack;
 import meteordevelopment.meteorclient.events.entity.EntityAddedEvent;
 import meteordevelopment.meteorclient.events.world.TickEvent;
 import meteordevelopment.meteorclient.settings.EnumSetting;
+import meteordevelopment.meteorclient.settings.IntSetting;
 import meteordevelopment.meteorclient.settings.Setting;
 import meteordevelopment.meteorclient.settings.SettingGroup;
 import meteordevelopment.meteorclient.systems.modules.Module;
@@ -38,6 +39,13 @@ public class AntiCreeper extends Module {
         .build()
     );
 
+    private final Setting<Integer> range = sgGeneral.add(new IntSetting.Builder()
+        .name("range")
+        .description("Max distance creepers will get attacked from.")
+        .defaultValue(4)
+        .build()
+    );
+
     public AntiCreeper() {
         super(BrewAddon.CATEGORY, "b-anti-creeper", "Automatically kills creepers.");
     }
@@ -50,7 +58,7 @@ public class AntiCreeper extends Module {
 
         mc.world.getEntities().forEach(entity -> {
             if (entity instanceof CreeperEntity creeper) {
-                if (creeper.getFuseSpeed() > 0) {
+                if (creeper.getFuseSpeed() > 0 && mc.player.squaredDistanceTo(creeper) <= range.get() * range.get()) {
                     Attack.attack(creeper, true, 10, true);
                 }
             }
@@ -61,7 +69,7 @@ public class AntiCreeper extends Module {
     private void onEntityAdded(EntityAddedEvent event) {
         if (mode.get() == KillMode.OnExplode) return;
 
-        if (event.entity instanceof CreeperEntity) {
+        if (event.entity instanceof CreeperEntity && mc.player.squaredDistanceTo(event.entity) <= range.get() * range.get()) {
             Attack.attack(event.entity, true, 10, true);
         }
     }

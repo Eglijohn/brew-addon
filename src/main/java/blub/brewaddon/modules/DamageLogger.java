@@ -90,22 +90,33 @@ public class DamageLogger extends Module {
         }
 
         ItemStack item = attacker instanceof LivingEntity ? ((LivingEntity) attacker).getMainHandStack() : null;
-        Text message = attackerText.copy().append(Text.literal(" attacked ").formatted(Formatting.GRAY)).append(targetText);
+        Text message = Text.literal("")
+            .append(attackerText)
+            .append(Text.literal(" attacked ").formatted(Formatting.GRAY))
+            .append(targetText);
 
         if (includeMethod.get()) {
-            message = message.copy().append(Text.literal(" via ").formatted(Formatting.GRAY))
+            message = message.copy()
+                .append(Text.literal(" via ").formatted(Formatting.GRAY))
                 .append(Text.literal(formattedAttackMethod).formatted(Formatting.YELLOW));
         }
 
         if (includeDistance.get()) {
-            message = message.copy().append(Text.literal(" from ").formatted(Formatting.GRAY))
-                .append(Text.literal(String.valueOf(attackDistance)).formatted(Formatting.LIGHT_PURPLE));
+            message = message.copy()
+                .append(Text.literal(" from ").formatted(Formatting.GRAY))
+                .append(Text.literal(String.valueOf(attackDistance)).formatted(Formatting.LIGHT_PURPLE))
+                .append(Text.literal(" blocks away").formatted(Formatting.GRAY));
         }
 
         if (includeItem.get() && item != null) {
-            message = message.copy().append(Text.literal(" with ").formatted(Formatting.GRAY))
+            Text itemName = Text.literal(
+                (item.getCustomName() != null ? item.getCustomName().getString() : item.getName().getString())
+            );
+
+            message = message.copy()
+                .append(Text.literal(" with ").formatted(Formatting.GRAY))
                 .append(Text.literal("[").formatted(Formatting.GRAY))
-                .append((item.getCustomName() != null ? item.getCustomName() : item.getName()).copy().styled(style -> style.withHoverEvent(new HoverEvent.ShowItem(item))))
+                .append(itemName.copy().styled(style -> style.withHoverEvent(new HoverEvent.ShowItem(item))))
                 .append(Text.literal("]").formatted(Formatting.GRAY));
         }
 

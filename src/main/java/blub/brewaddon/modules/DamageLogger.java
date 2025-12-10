@@ -7,29 +7,41 @@ import meteordevelopment.meteorclient.systems.friends.Friends;
 import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.orbit.EventHandler;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.packet.Packet;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.EntityDamageS2CPacket;
-import net.minecraft.network.packet.s2c.play.ScoreboardScoreUpdateS2CPacket;
-
-import java.util.List;
-import java.util.regex.Pattern;
+import net.minecraft.text.HoverEvent;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 import static blub.brewaddon.utils.misc.TextUtils.formatMinecraftString;
 
 public class DamageLogger extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
-    private final Setting<logMode> logModeSetting = sgGeneral.add(new EnumSetting.Builder<logMode>()
-        .name("log-mode")
-        .description("How to log the damage events")
-        .defaultValue(logMode.NamesMethodDistance)
-        .build());
-
     private final Setting<attackMode> attackModeSetting = sgGeneral.add(new EnumSetting.Builder<attackMode>()
         .name("trigger-mode")
         .description("When to react to when attacked.")
         .defaultValue(attackMode.FriendsAndSelf)
+        .build());
+
+    private final Setting<Boolean> includeMethod = sgGeneral.add(new BoolSetting.Builder()
+        .name("include-method")
+        .description("Include attack method.")
+        .defaultValue(true)
+        .build());
+
+    private final Setting<Boolean> includeDistance = sgGeneral.add(new BoolSetting.Builder()
+        .name("include-distance")
+        .description("Include attack distance.")
+        .defaultValue(true)
+        .build());
+
+    private final Setting<Boolean> includeItem = sgGeneral.add(new BoolSetting.Builder()
+        .name("include-item")
+        .description("Include item information.")
+        .defaultValue(true)
         .build());
 
     public DamageLogger() {
@@ -38,6 +50,7 @@ public class DamageLogger extends Module {
 
     @EventHandler
     private void onReceivePacket(PacketEvent.Receive event) {
+        if (mc.world == null) return;
         if (!(event.packet instanceof EntityDamageS2CPacket packet)) return;
 
         Entity attacker = mc.world.getEntityById(packet.sourceCauseId());
@@ -58,7 +71,6 @@ public class DamageLogger extends Module {
             case FriendsAndSelf -> targetIsSelf || targetIsFriend;
             case Friends -> targetIsFriend;
             case All -> true;
-            default -> false;
         };
 
         if (!shouldReact) return;
@@ -66,12 +78,49 @@ public class DamageLogger extends Module {
         String attackerName = attacker.getName().getString();
         String targetName = target.getName().getString();
 
-        switch (logModeSetting.get()) {
-            case Names -> info(attackerName + " attacked " + targetName);
-            case NamesMethod -> info(attackerName + " attacked " + targetName + " via " + formattedAttackMethod);
-            case NamesDistance -> info(attackerName + " attacked " + targetName + " from " + attackDistance + " blocks away");
-            case NamesMethodDistance -> info(attackerName + " attacked " + targetName + " via " + formattedAttackMethod + " from " + attackDistance + " blocks away");
+        Text attackerText = Text.literal(attackerName).formatted(Formatting.RED);
+        Text targetText;
+
+        if (targetIsSelf) {
+            targetText = Text.literal(targetName).formatted(Formatting.GOLD);
+        } else if (targetIsFriend) {
+            targetText = Text.literal(targetName).formatted(Formatting.GREEN);
+        } else {
+            targetText = Text.literal(targetName).formatted(Formatting.AQUA);
         }
+
+        ItemStack item = attacker instanceof LivingEntity ? ((LivingEntity) attacker).getMainHandStack() : null;
+        Text message = Text.literal("")
+            .append(attackerText)
+            .append(Text.literal(" attacked ").formatted(Formatting.GRAY))
+            .append(targetText);
+
+        if (includeMethod.get()) {
+            message = message.copy()
+                .append(Text.literal(" via ").formatted(Formatting.GRAY))
+                .append(Text.literal(formattedAttackMethod).formatted(Formatting.YELLOW));
+        }
+
+        if (includeDistance.get()) {
+            message = message.copy()
+                .append(Text.literal(" from ").formatted(Formatting.GRAY))
+                .append(Text.literal(String.valueOf(attackDistance)).formatted(Formatting.LIGHT_PURPLE))
+                .append(Text.literal(" blocks away").formatted(Formatting.GRAY));
+        }
+
+        if (includeItem.get() && item != null) {
+            Text itemName = Text.literal(
+                (item.getCustomName() != null ? item.getCustomName().getString() : item.getName().getString())
+            );
+
+            message = message.copy()
+                .append(Text.literal(" with ").formatted(Formatting.GRAY))
+                .append(Text.literal("[").formatted(Formatting.GRAY))
+                .append(itemName.copy().styled(style -> style.withHoverEvent(new HoverEvent.ShowItem(item))))
+                .append(Text.literal("]").formatted(Formatting.GRAY));
+        }
+
+        info(message);
     }
 
     public enum attackMode {
@@ -79,12 +128,5 @@ public class DamageLogger extends Module {
         FriendsAndSelf,
         Friends,
         All
-    }
-
-    public enum logMode {
-        Names,
-        NamesMethod,
-        NamesMethodDistance,
-        NamesDistance
     }
 }

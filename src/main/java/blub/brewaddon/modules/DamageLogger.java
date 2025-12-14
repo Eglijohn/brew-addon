@@ -108,7 +108,7 @@ public class DamageLogger extends Module {
                 .append(Text.literal(" blocks away").formatted(Formatting.GRAY));
         }
 
-        if (includeItem.get() && item != null) {
+        if (includeItem.get() && item != null) && !item.isEmpty() {
             Text itemName = Text.literal(
                 (item.getCustomName() != null ? item.getCustomName().getString() : item.getName().getString())
             );

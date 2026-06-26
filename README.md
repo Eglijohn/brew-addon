@@ -7,6 +7,9 @@
   <img src="https://img.shields.io/badge/made%20with-%F0%9F%8D%BA-ffe200" />
 </p>
 
+> [!NOTE]
+> ### This is NOT Brew Hack!
+> Since so many people told me that they found brew hack on github: this is a meteor addon i made some time ago that i do not work on anymore and has nothing to do with brew hack.
 # 🍺 Brew Addon 
 _A Meteor addon for the drunks_
 
